@@ -1,14 +1,8 @@
 # Homework 5 Submission
 
-Welcome to Homework 5! This repository contains the skeleton code for your Game of Life assignment. Please follow the instructions below to complete and submit your assignment.
-
-## Reading the Assignment Instructions
-
-1. Before starting, make sure to read the full description and instructions for this assignment. You can find the detailed guidelines in a supported PDF file available on Moodle.
-
-## Cloning the Repository
-1. Clone this repository to your local machine. Use the GitHub Classroom link provided to you.
-2. For a detailed guide on how to clone a repository, watch the instructional video available on Moodle.
+## Assignment Instructions
+1. Before starting, make sure to read the full description and instructions for this assignment. 
+You can find the detailed guidelines in a supported PDF file available on Moodle.
 
 ## Working on the Assignment 
 1. Open the file `GameOfLife.java` in your preferred Java development environment.
