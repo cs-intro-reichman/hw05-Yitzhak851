@@ -87,20 +87,23 @@ public class GameOfLife {
 		int neighbors = count(board, i, j);
 		int cellValue = board[i][j];
 
-		if (cellValue == 1 && (neighbors < 2 && neighbors > 3)) {
-			// if cell isAlive and has less than 2 live neighbors, it dies.
-			// if cell isAlive and has more than 3 live neighbors, it dies.
-			return 0;
-		} else if (cellValue == 1 && (neighbors == 3 && neighbors == 2)) {
-			// if cell isAlive and has 2 or 3 live neighbors, it remains alive.
-			return 1;
-		} else if (cellValue == 0 && neighbors == 3) {
-			// if cell isDead and has 3 live neighbors, it becomes alive.
-			return 1;
+		if (cellValue == 1) {
+			// cell isAlive and has less than 2 live neighbors, it dies.
+			// cell isAlive and has more than 3 live neighbors, it dies.
+			// cell isAlive and has 2 or 3 live neighbors, it remains alive.
+			if (neighbors == 2 || neighbors == 3) {
+				return 1;
+			} else {
+				return 0;
+			}
 		} else {
-			// Otherwise the cell does not change.
-			return 0;
+			// cell isDead and has 3 live neighbors, it becomes alive.
+			if (neighbors == 3) {
+				return 1;
+			}
 		}
+		// Otherwise the cell does not change.
+		return 0;
 	}
 
 	// Counts and returns the number of living neighbors of the given cell.
@@ -109,7 +112,7 @@ public class GameOfLife {
 		int count = 0;
 		for (int row = i - 1; row <= i + 1; row++) {
 			for (int col = j - 1; col <= j + 1; col++) {
-				if (board[row][col] == 1 && (row != i && col != j)) {
+				if (board[row][col] == 1 && !(row == i && col == j)) {
 					count++;
 				}
 			}
