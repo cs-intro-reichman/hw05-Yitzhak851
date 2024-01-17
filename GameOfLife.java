@@ -1,20 +1,14 @@
-/**
- * Game of Life.
- * Usage: "java GameOfLife fileName"
- * The file represents the initial board.
- * The file format is described in the homework document.
- */
-
 public class GameOfLife {
 
 	public static void main(String[] args) {
-		String fileName = args[0];
-		//// Uncomment the test that you want to execute, and re-compile.
-		//// (Run one test at a time).
-		test1(fileName);
-		//// test2(fileName);
-		//// test3(fileName, 3);
-		//// play(fileName);
+		String fileName = args[0]; // Gets the fileName from the command line.
+		System.out.println("=================Test 1 V ====================");
+		test1(fileName); // Get file ==> initial board from the file ==> print
+		System.out.println("==================Test 2 V ===================");
+		test2(fileName); // Get file ==> initial board from the file ==> print ==> count ==> cellValue
+		System.out.println("==================Test 3 V ===================");
+		test3(fileName, 3);
+		// play(fileName);
 	}
 
 	// Reads the data file and prints the initial board.
@@ -23,16 +17,16 @@ public class GameOfLife {
 		print(board);
 	}
 
-	// Reads the data file, and runs a test that checks
-	// the count and cellValue functions.
+	// Reads the data file => run test that checks count && cellValue fofo
 	public static void test2(String fileName) {
 		int[][] board = read(fileName);
-		//// Write here code that tests that the count and cellValue functions
-		//// are working properly, and returning the correct values.
+		// TODO : Write here code that tests the count fofo
+		System.out.println("the count of alive neighbors: " + count(board, 2, 2));
+		// TODO : Write here code that tests the cellValue fofo
+		System.out.println("cellValue at next generation: " + cellValue(board, 2, 2));
 	}
 
-	// Reads the data file, plays the game for Ngen generations,
-	// and prints the board at the beginning of each generation.
+	// Reads the data file, plays Ngen, print board at beginning of each gen.
 	public static void test3(String fileName, int Ngen) {
 		int[][] board = read(fileName);
 		for (int gen = 0; gen < Ngen; gen++) {
@@ -51,66 +45,92 @@ public class GameOfLife {
 		}
 	}
 
-	// Reads the initial board configuration from the file whose name is fileName,
-	// uses the data
-	// to construct and populate a 2D array that represents the game board, and
-	// returns this array.
-	// Live and dead cells are represented by 1 and 0, respectively. The constructed
-	// board has 2 extra
-	// rows and 2 extra columns, containing zeros. These are the top and the bottom
-	// row, and the leftmost
-	// and the rightmost columns. Thus the actual board is surrounded by a "frame"
-	// of zeros. You can think
-	// of this frame as representing the infinite number of dead cells that exist in
-	// every direction.
-	// This function assumes that the input file contains valid data, and does no
-	// input testing.
+	// Reads the data file and returns the initial board.
 	public static int[][] read(String fileName) {
-		In in = new In(fileName); // Constructs an In object for reading the input file
+		In in = new In(fileName);
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
-		int[][] board = new int[rows + 2][cols + 2];
-		//// Replace the following statement with your code.
-		return null;
+		int[][] board = new int[rows + 2][cols + 2]; // Create array with 2 extra rows and columns
+		// TODO : Write here code that reads the data file and initializes the board.
+		boolean end2ReadFile = false;
+		String readNextline = "";
+		int startRow = 1;
+		while (!end2ReadFile) {
+			readNextline = in.readLine(); // line = Read the next line
+			for (int i = 0; i < readNextline.length(); i++) {
+				if (readNextline.charAt(i) == 'x') {
+					board[startRow][i + 1] = 1; // i+1 its because we have 2 extra rows and columns
+				}
+			}
+			end2ReadFile = in.isEmpty(); // end2Read "blabla.dot" ? end2ReadFile = true : false ;
+			startRow++; // increment the row
+		}
+		return board;
 	}
 
 	// Creates a new board from the given board, using the rules of the game.
-	// Uses the cellValue(board,i,j) function to compute the value of each
-	// cell in the new board. Returns the new board.
 	public static int[][] evolve(int[][] board) {
-		//// Replace the following statement with your code.
-		return null;
+		// Creates a new board from the given board, using the rules of the game.
+		int[][] newBoard = new int[board.length][board[0].length];
+		// TODO : Replace the following statement with your code.
+		for (int i = 1; i < board.length - 1; i++) { // i = row
+			for (int j = 1; j < board[0].length - 1; j++) { // j = col
+				newBoard[i][j] = cellValue(board, i, j);
+			}
+		}
+		return newBoard;
 	}
 
 	// Returns the value that cell (i,j) should have in the next generation.
-	// If the cell is alive (equals 1) and has fewer than two live neighbors, it
-	// dies (becomes 0).
-	// If the cell is alive and has two or three live neighbors, it remains alive.
-	// If the cell is alive and has more than three live neighbors, it dies.
-	// If the cell is dead and and has three live neighbors, it becomes alive.
-	// Otherwise the cell does not change.
-	// Assumes that i is at least 1 and at most the number of rows in the board - 1.
-	// Assumes that j is at least 1 and at most the number of columns in the board -
-	// 1.
-	// Uses the count(board,i,j) function to count the number of alive neighbors.
 	public static int cellValue(int[][] board, int i, int j) {
-		//// Replace the following statement with your code.
-		return 0;
+		// TODO : Replace the following statement with your code.
+		int cellValue = board[i][j];
+		// if cell isAlive and has less than 2 live neighbors, it dies (becomes 0).
+		// if cell isAlive and has more than 3 live neighbors, it dies.
+		if (cellValue == 1 && count(board, i, j) < 2 && count(board, i, j) > 3) {
+			cellValue = 0;
+		} else if (cellValue == 1 && (count(board, i, j) == 3 || count(board, i, j) == 2)) {
+			// if cell isAlive and has 2 or 3 live neighbors, it remains alive.
+			cellValue = 1;
+		} else if (cellValue == 0 && count(board, i, j) == 3) {
+			// if cell isDead and has 3 live neighbors, it becomes alive.
+			cellValue = 1;
+		} else {
+			// Otherwise the cell does not change.
+			cellValue = board[i][j];
+		}
+		return cellValue;
 	}
 
-	// Counts and returns the number of living neighbors of the given cell
-	// (The cell itself is not counted).
-	// Assumes that i is at least 1 and at most the number of rows in the board - 1.
-	// Assumes that j is at least 1 and at most the number of columns in the board -
-	// 1.
+	// Counts and returns the number of living neighbors of the given cell.
 	public static int count(int[][] board, int i, int j) {
-		//// Replace the following statement with your code.
-		return 0;
+		// TODO : Replace the following statement with your code.
+		int count = 0;
+		for (int row = i - 1; row <= i + 1; row++) {
+			for (int col = j - 1; col <= j + 1; col++) {
+				if (board[row][col] == 1 && (row != i && col != j)) {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
-	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
+	/**
+	 * Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
+	 *
+	 * @void Prints the board.
+	 */
 	public static void print(int[][] arr) {
-		//// Write your code here.
+		int rows = arr.length; // Does not include the frame rows.
+		int cols = arr[0].length; // Does not include the frame columns.
+		// Prints the number of rows and columns.
+		for (int i = 1; i < rows - 1; i++) {
+			for (int j = 1; j < cols - 1; j++) {
+				System.out.printf("%3s", arr[i][j]);
+			}
+			System.out.println();
+		}
 	}
 
 	// Displays the board. Living and dead cells are represented by black and white
@@ -129,22 +149,19 @@ public class GameOfLife {
 		StdDraw.setXscale(0, cols);
 		StdDraw.setYscale(0, rows);
 
-		// Enables drawing graphics in memory and showing it on the screen only when
-		// the StdDraw.show function is called.
+		// Enables drawing graphics in memory and showing it
+		// on the screen only when the StdDraw.show function is called.
 		StdDraw.enableDoubleBuffering();
 
-		// For each cell (i,j), draws a filled square of size 1 by 1 (remember that the
-		// canvas was
-		// already scaled to the dimensions rows by cols, which were read from the data
-		// file).
+		// For each cell (i,j), draws a filled square of size 1 by 1
+		// remember that the canvas was already scaled to the dimensions rows by cols,
+		// which were read from the data file.
 		// Uses i and j to calculate the (x,y) location of the square's center, i.e.
-		// where it
-		// will be drawn in the overall canvas. If the cell contains 1, sets the
-		// square's color
-		// to black; otherwise, sets it to white. In the RGB (Red-Green-Blue) color
-		// scheme used by
-		// StdDraw, the RGB codes of black and white are, respetively, (0,0,0) and
-		// (255,255,255).
+		// where it will be drawn in the overall canvas.
+		// If the cell contains 1, sets the square's color to black;
+		// otherwise, sets it to white.
+		// In the RGB (Red-Green-Blue) color scheme used by StdDraw,
+		// the RGB codes of black and white are, respetively, (0,0,0) and (255,255,255).
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				int color = 255 * (1 - board[i][j]);
