@@ -84,22 +84,23 @@ public class GameOfLife {
 	// Returns the value that cell (i,j) should have in the next generation.
 	public static int cellValue(int[][] board, int i, int j) {
 		// TODO : Replace the following statement with your code.
+		int neighbors = count(board, i, j);
 		int cellValue = board[i][j];
-		// if cell isAlive and has less than 2 live neighbors, it dies (becomes 0).
-		// if cell isAlive and has more than 3 live neighbors, it dies.
-		if (cellValue == 1 && (count(board, i, j) < 2 || count(board, i, j) > 3)) {
-			cellValue = 0;
-		} else if (cellValue == 1 && (count(board, i, j) == 3 || count(board, i, j) == 2)) {
+
+		if (cellValue == 1 && (neighbors < 2 && neighbors > 3)) {
+			// if cell isAlive and has less than 2 live neighbors, it dies.
+			// if cell isAlive and has more than 3 live neighbors, it dies.
+			return 0;
+		} else if (cellValue == 1 && (neighbors == 3 && neighbors == 2)) {
 			// if cell isAlive and has 2 or 3 live neighbors, it remains alive.
-			cellValue = 1;
-		} else if (cellValue == 0 && count(board, i, j) == 3) {
+			return 1;
+		} else if (cellValue == 0 && neighbors == 3) {
 			// if cell isDead and has 3 live neighbors, it becomes alive.
-			cellValue = 1;
+			return 1;
 		} else {
 			// Otherwise the cell does not change.
-			cellValue = board[i][j];
+			return 0;
 		}
-		return cellValue;
 	}
 
 	// Counts and returns the number of living neighbors of the given cell.
