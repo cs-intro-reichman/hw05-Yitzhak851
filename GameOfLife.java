@@ -87,7 +87,7 @@ public class GameOfLife {
 		int cellValue = board[i][j];
 		// if cell isAlive and has less than 2 live neighbors, it dies (becomes 0).
 		// if cell isAlive and has more than 3 live neighbors, it dies.
-		if (cellValue == 1 && count(board, i, j) < 2 && count(board, i, j) > 3) {
+		if (cellValue == 1 && (count(board, i, j) < 2 || count(board, i, j) > 3)) {
 			cellValue = 0;
 		} else if (cellValue == 1 && (count(board, i, j) == 3 || count(board, i, j) == 2)) {
 			// if cell isAlive and has 2 or 3 live neighbors, it remains alive.
