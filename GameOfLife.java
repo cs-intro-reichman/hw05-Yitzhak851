@@ -120,11 +120,7 @@ public class GameOfLife {
 		return count;
 	}
 
-	/**
-	 * Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
-	 *
-	 * @void Prints the board.
-	 */
+	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
 	public static void print(int[][] arr) {
 		int rows = arr.length; // Does not include the frame rows.
 		int cols = arr[0].length; // Does not include the frame columns.
