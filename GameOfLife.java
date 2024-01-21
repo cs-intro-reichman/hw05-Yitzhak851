@@ -2,11 +2,11 @@ public class GameOfLife {
 
 	public static void main(String[] args) {
 		String fileName = args[0]; // Gets the fileName from the command line.
-		System.out.println("=================Test 1 V ====================");
+		// System.out.println("=================Test 1 V ====================");
 		test1(fileName); // Get file ==> initial board from the file ==> print
-		System.out.println("==================Test 2 V ===================");
+		// System.out.println("==================Test 2 V ===================");
 		test2(fileName); // Get file ==> initial board from the file ==> print ==> count ==> cellValue
-		System.out.println("==================Test 3 V ===================");
+		// System.out.println("==================Test 3 V ===================");
 		test3(fileName, 3);
 		// play(fileName);
 	}
